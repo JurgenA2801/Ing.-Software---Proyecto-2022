@@ -9,8 +9,8 @@ class servicio extends Model
 {
     use HasFactory; 
 
-    public function reserva_servicio() { 
-        return $this->belongsToMany(reserva_servicio::class, 'reserva_servicios');
+    public function reservacions() { 
+        return $this->belongsToMany(reservacion::class);
     } 
 
     public function count(){ 

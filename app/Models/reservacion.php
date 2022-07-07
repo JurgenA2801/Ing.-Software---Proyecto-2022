@@ -11,8 +11,13 @@ class reservacion extends Model
 
     protected $fillable = ['cliente_id', 'numeroVuelo']; 
 
-    public function agregarServicio($servicio) { 
-        return $this->reserva_servicio()->save($servicio);
+    public function agregarServicio($id) { 
+        return $this->servicios()->attach($id);
+    } 
+
+    public function eliminarServicio($id){ 
+        
+        return $this->servicios()->detach($id);
     }
 
     public function cliente()
@@ -25,14 +30,13 @@ class reservacion extends Model
     
     } 
 
-    public function reserva_servicio()
-    {
-        return $this->belongsToMany(reserva_servicio::class, 'reserva_servicios');
+    public function servicios() { 
+        return $this->belongsToMany(servicio::class);
     } 
 
     public function countServicio()
     {
-        return $this->reserva_servicio()->count();
+        return $this->servicios()->count();
     }
  
     public function desasociarCliente(){ 

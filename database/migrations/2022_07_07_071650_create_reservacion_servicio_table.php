@@ -11,13 +11,12 @@ return new class extends Migration
      *
      * @return void
      */
- 
     public function up()
     {
-        Schema::create('reserva_servicios', function (Blueprint $table) {
+        Schema::create('reservacion_servicio', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('servicio_id')->nullable()->index();
-            $table->foreignId('reservacion_id')->nullable()->index();
+            $table->foreignId('reservacion_id')->references('id')->on('reservacions')->onDelete('cascade')->nullable();
+            $table->foreignId('servicio_id')->references('id')->on('servicios')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reserva_servicios');
+        Schema::dropIfExists('reservacion_servicio');
     }
 };
