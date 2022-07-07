@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('estadoServicio'); 
             $table->integer('numeroVuelo');
             $table->integer('cantidadPasajeros'); 
-            $table->foreignId('servicio_id')->nullable()->index();
             $table->integer('tarifa'); 
             $table->string('observaciones');
 

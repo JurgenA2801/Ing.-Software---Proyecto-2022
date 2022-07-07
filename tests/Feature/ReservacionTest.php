@@ -34,13 +34,47 @@ class ReservacionTest extends TestCase
         $cliente = cliente::factory()->create(); 
         $cliente->agregarReserva($reserva);
         $reserva->desasociarCliente();
-        $this->assertEquals(0, $reserva->countCliente());
+        $this->assertEquals(0, $reserva->countCliente()); 
+    } 
+
+    public function test_agregar_reserva(){ 
+        $reserva = reservacion::factory()->create(); 
+        $this->assertEquals(true, $reserva->agregar()); 
+    } 
+
+    public function test_editar_reserva(){  
+        $reserva = reservacion::factory()->create(); 
+        $reserva->editar('10'); 
+        $this->assertEquals('10', $reserva->numeroVuelo); 
+
+    } 
+
+    public function test_eliminar_reserva(){ 
+        $reserva = reservacion::factory()->create(); 
+        $reserva2 = reservacion::factory()->create(); 
+        $reserva->eliminar($reserva->id);
+        $this->assertEquals(1, $reserva->cantidadReserva());
+    } 
+
+    public function test_mostrar_todas_las_reservas(){ 
+
+        $reserva = reservacion::factory()->create(); 
+        $reserva2 = reservacion::factory()->create(); 
+        $reserva3 = reservacion::factory()->create(); 
+        $this->assertEquals(3, $reserva->cantidadReserva());
+    
     }
+
+
 
     // public function test_una_reserva_tiene_un_servicio()
     // {
     //     $reserva = reservacion::factory()->create();
     //     $servicio = servicio::factory()->create(); 
+    //     $reserva->agregarServicio($servicio); 
+    //     $this->assertEquals(1, $reserva->countServicio());
+
+
     // }
 }
 
