@@ -67,14 +67,22 @@ class ReservacionTest extends TestCase
 
 
 
-    // public function test_una_reserva_tiene_un_servicio()
-    // {
-    //     $reserva = reservacion::factory()->create();
-    //     $servicio = servicio::factory()->create(); 
-    //     $reserva->agregarServicio($servicio); 
-    //     $this->assertEquals(1, $reserva->countServicio());
+    public function test_una_reserva_tiene_un_servicio()
+    {
+        $reserva = reservacion::factory()->create();
+        $servicio = servicio::factory()->create(); 
+        $reserva->agregarServicio($servicio->id); 
+        $this->assertEquals(1, $reserva->countServicio());
 
 
-    // }
+    } 
+
+    public function test_se_puede_desasociar_un_servicio_de_una_reserva(){ 
+
+        $reserva = reservacion::factory()->create();
+        $servicio = servicio::factory()->create(); 
+        $reserva->eliminarServicio($servicio->id); 
+        $this->assertEquals(0, $reserva->countServicio());
+    }
 }
 
