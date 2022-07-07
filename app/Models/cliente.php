@@ -9,6 +9,9 @@ class cliente extends Model
 {
     use HasFactory; 
 
+    protected $fillable = ['cedula', 'name'];
+
+
     public function reservacion(){ 
        return $this->hasMany(reservacion::class);
     } 
@@ -22,4 +25,23 @@ class cliente extends Model
      return $this->reservacion()->save($reserva);
     
     }
+    public function cantidad_cliente(){/*No se si lo voy a ocupar */
+
+        $clientes = cliente::all();
+
+        return $clientes->count();
+    }
+    public function agregar() {
+        return $this->save();
+    } 
+    public function editar($atributoAEditar){ 
+        return $this->update(['cedula' => $atributoAEditar]);
+    } 
+    public function eliminar($id){ 
+
+        $cliente = cliente::find($id);
+ 
+        $cliente->delete();
+    }  
+    
 }
