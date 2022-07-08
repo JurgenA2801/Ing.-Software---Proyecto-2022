@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('servicios', function (Blueprint $table) {
+        Schema::create('proveedors', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('tarifa_id')->nullable()->index(); 
-             $table->foreignId('proveedor_id')->nullable()->index(); 
-            $table->string('fecha'); 
+            $table->string('nombre');
+           // $table->integer('idTipoServicio');
+           // $table->integer('idTarifa');
+            $table->integer('comisiones');
             $table->string('observaciones');
+            $table->string('correo');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicios');
+        Schema::dropIfExists('proveedors');
     }
 };
