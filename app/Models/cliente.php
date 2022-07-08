@@ -25,7 +25,7 @@ class cliente extends Model
      return $this->reservacion()->save($reserva);
     
     }
-    public function cantidad_cliente(){/*No se si lo voy a ocupar */
+    public function cantidad_cliente(){
 
         $clientes = cliente::all();
 

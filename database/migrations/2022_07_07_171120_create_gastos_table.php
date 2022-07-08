@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('gastos', function (Blueprint $table) {
-            $table->id();
-        //     /*$table->idTipoDeGasto();
-        //     $table->idReservacion();*/
-        //     $table->fecha();
-        //     $table->monto();
-        //     $table->descripcion();
-        //    /* $table->idGastoVehiculo();*/
-        //     $table->timestamps();
+            $table->id(); 
+        //    $table->foreignId('TipoDeGasto_id')->nullable()->index();
+            $table->foreignId('reservacions_id')->nullable()->index();
+            $table->date('fecha');
+            $table->integer('monto'); 
+            $table->string('descripcion');
+            //    $table->foreignId('gastoVehiculo_id')->nullable()->index();
+           $table->timestamps();
         });
     }
 
