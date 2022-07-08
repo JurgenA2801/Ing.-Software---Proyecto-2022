@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('gastos', function (Blueprint $table) {
             $table->id();
-            /*$table->idTipoDeGasto();
-            $table->idReservacion();*/
-            $table->fecha();
-            $table->monto();
-            $table->descripcion();
-           /* $table->idGastoVehiculo();*/
-            $table->timestamps();
+        //     /*$table->idTipoDeGasto();
+        //     $table->idReservacion();*/
+        //     $table->fecha();
+        //     $table->monto();
+        //     $table->descripcion();
+        //    /* $table->idGastoVehiculo();*/
+        //     $table->timestamps();
         });
     }
 
