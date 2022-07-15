@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\cliente; 
 use App\Models\servicio;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class ReservacionTest extends TestCase
@@ -18,71 +19,64 @@ class ReservacionTest extends TestCase
      * @return void
      */
   
-
-    public function test_una_reserva_puede_tener_un_cliente()
-    {
-        $reserva = reservacion::factory()->create();
-        $cliente = cliente::factory()->create(); 
-        $cliente->agregarReserva($reserva);
-        
-        $this->assertEquals(1, $reserva->countCliente());
-    }  
-
-    public function test_desasociar_reserva_de_un_cliente()
-    {
-        $reserva = reservacion::factory()->create();
-        $cliente = cliente::factory()->create(); 
-        $cliente->agregarReserva($reserva);
-        $reserva->desasociarCliente();
-        $this->assertEquals(0, $reserva->countCliente()); 
-    } 
-
-    public function test_agregar_reserva(){ 
-        $reserva = reservacion::factory()->create(); 
-        $this->assertEquals(true, $reserva->agregar()); 
-    } 
-
     public function test_editar_reserva(){  
-        $reserva = reservacion::factory()->create(); 
-        $reserva->editar('10'); 
-        $this->assertEquals('10', $reserva->numeroVuelo); 
+
+
+        $reservaParaActualizar = reservacion::factory()->create();
+        $reservaParaActualizar->save(); //Guardo reserva con id = 1
+        $testReserva = [
+            'fechaInicio' => date("Y/m/d"),
+            'fechaCierre'=> date("Y/m/d"),
+            'horaCierre'=> time(),
+            'estadoServicio'=> 'Listo', 
+            'numeroVuelo' => 15, 
+            'cantidadPasajeros' =>20, 
+            'tarifa'=> 5000, 
+            'observaciones'=> 'No hay observaciones'
+                  
+        ]; 
+        $response = $this->put('/reservacionUpdate', $testReserva); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('reservacions', ['estadoServicio' => 'Listo']);
 
     } 
 
-    public function test_eliminar_reserva(){ 
-        $reserva = reservacion::factory()->create(); 
-        $reserva2 = reservacion::factory()->create(); 
-        $reserva->eliminar($reserva->id);
-        $this->assertEquals(1, $reserva->cantidadReserva());
-    } 
-
+ 
     public function test_mostrar_todas_las_reservas(){ 
 
         $reserva = reservacion::factory()->create(); 
-        $reserva2 = reservacion::factory()->create(); 
-        $reserva3 = reservacion::factory()->create(); 
-        $this->assertEquals(3, $reserva->cantidadReserva());
-    
+        $reserva->save();
+        $response = $this->get('/reservacion');
+        
+        $response->assertStatus(200)->assertSee($reserva->observaciones);
+        $this->assertDatabaseHas('reservacions', ['tarifa'=>$reserva->tarifa]);
+             
+    }
+
+    public function test_crear_reserva(){ 
+
+        $testReserva = [
+            'fechaInicio' => date("Y/m/d"),
+            'fechaCierre'=> date("Y/m/d"),
+            'horaCierre'=> time(),
+            'estadoServicio'=> 'Listo', 
+            'numeroVuelo' => 15, 
+            'cantidadPasajeros' =>20, 
+            'tarifa'=> 5000, 
+            'observaciones'=> 'No hay observaciones'
+                  
+        ];
+        $response = $this->post('/reservacionGuardar', $testReserva); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('reservacions', ['numeroVuelo' => 15]);
     }
 
 
 
-    public function test_una_reserva_tiene_un_servicio()
-    {
-        $reserva = reservacion::factory()->create();
-        $servicio = servicio::factory()->create(); 
-        $reserva->agregarServicio($servicio->id); 
-        $this->assertEquals(1, $reserva->countServicio());
 
-
-    } 
-
-    public function test_se_puede_desasociar_un_servicio_de_una_reserva(){ 
-
-        $reserva = reservacion::factory()->create();
-        $servicio = servicio::factory()->create(); 
-        $reserva->eliminarServicio($servicio->id); 
-        $this->assertEquals(0, $reserva->countServicio());
-    }
 }
 

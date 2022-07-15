@@ -32,7 +32,7 @@ class GastoTest extends TestCase
     }
     public function test_agregar_gasto(){ 
         $gasto = gasto::factory()->create(); 
-        $this->assertEquals(true, $gasto->agregar()); 
+        $this->assertEquals(true, $gasto->save()); 
     } 
 
     public function test_editar_gasto(){  

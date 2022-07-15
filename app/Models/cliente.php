@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
+
 
 class cliente extends Model
 {
@@ -31,9 +32,7 @@ class cliente extends Model
 
         return $clientes->count();
     }
-    public function agregar() {
-        return $this->save();
-    } 
+   
     public function editar($atributoAEditar){ 
         return $this->update(['cedula' => $atributoAEditar]);
     } 

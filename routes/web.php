@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservacionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+}); 
+
+Route::get('reservacion', [ReservacionController::class, 'index']) -> name('reserva'); 
+Route::post('reservacionGuardar', [ReservacionController::class, 'guardar']) -> name('reservaGuardar'); 
+Route::put('reservacionUpdate', [ReservacionController::class, 'update']) -> name('reservaUpdate');

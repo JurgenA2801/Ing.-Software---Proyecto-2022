@@ -18,7 +18,7 @@ class ClienteTest extends TestCase
      */
     public function test_agregar_cliente(){ 
         $cliente = cliente::factory()->create(); 
-        $this->assertEquals(true, $cliente->agregar()); 
+        $this->assertEquals(true, $cliente->save()); 
     } 
 
     public function test_editar_cliente(){  

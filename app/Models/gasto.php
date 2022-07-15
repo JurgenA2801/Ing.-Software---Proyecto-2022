@@ -26,9 +26,7 @@ class gasto extends Model
  
         $gastos->delete();
     } 
-    public function agregar() { 
-        return $this->save();
-    }
+
     public function editar($atributoAEditar){ 
         return $this->update(['monto' => $atributoAEditar]);
     } 

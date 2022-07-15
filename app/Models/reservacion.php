@@ -44,14 +44,6 @@ class reservacion extends Model
         return $this->update(['cliente_id' => null]);
     } 
 
-    public function agregar() {
-        return $this->save();
-    } 
-
-    public function editar($atributoAEditar){ 
-        return $this->update(['numeroVuelo' => $atributoAEditar]);
-    } 
-
     public function eliminar($id){ 
 
         $reserva = reservacion::find($id);
@@ -66,9 +58,6 @@ class reservacion extends Model
         return $reservas->count();
      }  
 
-     public function listarReservas(){ 
-        
-        return reservacion::all();
-     }
+   
     
 }
