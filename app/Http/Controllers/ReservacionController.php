@@ -38,7 +38,7 @@ class ReservacionController extends Controller
     public function update(Request $request){ 
 
         DB::table('reservacions')
-            ->where('id', 1)
+            ->where('id', $request->id)
             ->update(['fechaInicio' => $request->fechaInicio,
             'fechaCierre'=> $request->fechaCierre, 
             'horaCierre'=>  $request->horaCierre, 

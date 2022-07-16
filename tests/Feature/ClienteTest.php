@@ -16,29 +16,52 @@ class ClienteTest extends TestCase
      *
      * @return void
      */
-    public function test_agregar_cliente(){ 
-        $cliente = cliente::factory()->create(); 
-        $this->assertEquals(true, $cliente->save()); 
+    public function test_crear_cliente(){ 
+       
+        $testCliente = [
+            'cedula' => '123456789',
+            'nombre'=> 'Jurgen',
+            'correo'=> 'solomandalo@gmail.com'        
+        ]; 
+
+        $response = $this->post('/clienteGuardar', $testCliente); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('clientes', ['cedula' => '123456789']);
+        
     } 
 
     public function test_editar_cliente(){  
-        $cliente = cliente::factory()->create(); 
-        $cliente->editar('402460889'); 
-        $this->assertEquals('402460889', $cliente->cedula); 
+        $clienteParaActualizar = cliente::factory()->create();
+        $clienteParaActualizar->save();  
+
+        $testCliente = [
+            'id'=> 1,
+            'cedula' => '123456789',
+            'nombre'=> 'Jurgen',
+            'correo'=> 'solomandalo@gmail.com'              
+        ]; 
+        $response = $this->put('/clienteUpdate', $testCliente); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('clientes', ['nombre' => 'Jurgen']);
 
     } 
-    public function test_eliminar_cliente(){ 
-        $cliente = cliente::factory()->create(); 
-        $cliente2 = cliente::factory()->create(); 
-        $cliente->eliminar($cliente->id);
-        $this->assertEquals(1, $cliente->cantidad_cliente());
-    }
-    public function test_mostrar_todas_los_clientes(){ 
+   
+    public function test_mostrar_todos_los_clientes(){ 
 
         $cliente = cliente::factory()->create(); 
         $cliente2 = cliente::factory()->create(); 
         $cliente3 = cliente::factory()->create(); 
-        $this->assertEquals(3, $cliente->cantidad_cliente());
+        $cliente->save();
+        $cliente2->save();
+        $cliente3->save();
+        $response = $this->get('/cliente');
+        
+        $response->assertStatus(200)->assertSee($cliente2->nombre);
+        $this->assertDatabaseHas('clientes', ['cedula'=>$cliente->cedula]);
     
     }
     

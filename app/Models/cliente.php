@@ -33,14 +33,6 @@ class cliente extends Model
         return $clientes->count();
     }
    
-    public function editar($atributoAEditar){ 
-        return $this->update(['cedula' => $atributoAEditar]);
-    } 
-    public function eliminar($id){ 
-
-        $cliente = cliente::find($id);
- 
-        $cliente->delete();
-    }  
+   
     
 }

@@ -25,6 +25,7 @@ class ReservacionTest extends TestCase
         $reservaParaActualizar = reservacion::factory()->create();
         $reservaParaActualizar->save(); //Guardo reserva con id = 1
         $testReserva = [
+            'id' => 1,
             'fechaInicio' => date("Y/m/d"),
             'fechaCierre'=> date("Y/m/d"),
             'horaCierre'=> time(),
