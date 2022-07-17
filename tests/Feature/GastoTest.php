@@ -16,29 +16,54 @@ class GastoTest extends TestCase
      *
      * @return void
      */
-    public function test_eliminar_gasto(){ 
-        $gasto = gasto::factory()->create(); 
-        $gasto2 = gasto::factory()->create(); 
-        $gasto->eliminar($gasto->id);
-        $this->assertEquals(1, $gasto->cantidad_gasto());
-    } 
+   
     public function test_mostrar_todos_los_gastos(){ 
 
         $gasto = gasto::factory()->create(); 
         $gasto2 = gasto::factory()->create(); 
-        $gasto = gasto::factory()->create(); 
-        $this->assertEquals(3, $gasto->cantidad_gasto());
+        $gasto3 = gasto::factory()->create(); 
+        $gasto->save();
+        $gasto2->save();
+        $gasto3->save();
+
+        $response = $this->get('/gasto');
+        
+        $response->assertStatus(200)->assertSee($gasto2->descripcion);
+        $this->assertDatabaseHas('gastos', ['monto'=>$gasto->monto]);
+
+
     
     }
-    public function test_agregar_gasto(){ 
-        $gasto = gasto::factory()->create(); 
-        $this->assertEquals(true, $gasto->save()); 
+    public function test_crear_gasto(){ 
+        $testGasto = [
+            'fecha' =>  date("Y/m/d"),
+            'monto'=> 250000,
+            'descripcion'=> 'gasto operativo excede el presupuesto'        
+        ];  
+
+        $response = $this->post('/gastoGuardar', $testGasto); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('gastos', ['monto'=>250000]);
     } 
 
     public function test_editar_gasto(){  
-        $gasto = gasto::factory()->create(); 
-        $gasto->editar('50000'); 
-        $this->assertEquals('50000', $gasto->monto); 
+        $gastoActualizar = gasto::factory()->create(); 
+        $gastoActualizar->save();  
+
+        $testGasto = [
+            'id'=> 1,
+            'fecha' =>  date("Y/m/d"),
+            'monto'=> 250000,
+            'descripcion'=> 'gasto operativo excede el presupuesto'        
+        ];  
+
+        $response = $this->put('/gastoUpdate', $testGasto); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('gastos', ['descripcion' =>'gasto operativo excede el presupuesto']);
 
     }
 }

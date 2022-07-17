@@ -20,8 +20,6 @@ class ReservacionTest extends TestCase
      */
   
     public function test_editar_reserva(){  
-
-
         $reservaParaActualizar = reservacion::factory()->create();
         $reservaParaActualizar->save(); //Guardo reserva con id = 1
         $testReserva = [

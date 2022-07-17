@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ReservacionController;
+use App\Http\Controllers\GastoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 }); 
-
+//rutas reservacion
 Route::get('reservacion', [ReservacionController::class, 'index']) -> name('reserva'); 
 Route::post('reservacionGuardar', [ReservacionController::class, 'guardar']) -> name('reservaGuardar'); 
 Route::put('reservacionUpdate', [ReservacionController::class, 'update']) -> name('reservaUpdate'); 
@@ -28,3 +29,7 @@ Route::post('clienteGuardar', [ClienteController::class, 'guardar']) -> name('cl
 Route::get('cliente', [ClienteController::class, 'index']) -> name('cliente'); 
 Route::put('clienteUpdate', [ClienteController::class, 'update']) -> name('clienteUpdate'); 
 
+//rutas gastos 
+Route::post('gastoGuardar', [GastoController::class, 'guardar']) -> name('gastoGuardar'); 
+Route::get('gasto', [GastoController::class, 'index']) -> name('gasto'); 
+Route::put('gastoUpdate', [GastoController::class, 'update']) -> name('gastoUpdate');

@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('gastos', function (Blueprint $table) {
             $table->id(); 
-        //    $table->foreignId('TipoDeGasto_id')->nullable()->index();
-            $table->foreignId('reservacions_id')->nullable()->index();
+            //$table->foreignId('TipoDeGasto_id')->nullable()->index();
+            $table->foreignId('reservacion_id')->nullable()->index();
             $table->date('fecha');
             $table->integer('monto'); 
             $table->string('descripcion');
-            //    $table->foreignId('gastoVehiculo_id')->nullable()->index();
+            //$table->foreignId('gastoVehiculo_id')->nullable()->index();
            $table->timestamps();
         });
     }

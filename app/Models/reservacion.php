@@ -23,7 +23,18 @@ class reservacion extends Model
     public function cliente()
     {
         return $this->belongsTo(cliente::class);
-    } 
+    }  
+
+    public function gasto() { 
+        return $this->hasMany(gasto::class);
+    }  
+   
+    public function agregarGasto($gasto){ 
+       
+        return $this->gasto()->save($gasto);
+       
+       } 
+
 
     public function countCliente(){ 
         return $this->cliente()->count();

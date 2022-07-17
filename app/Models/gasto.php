@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class gasto extends Model
 {
     use HasFactory;
-    protected $fillable = ['monto']; 
+   
+    protected $fillable = ['reservacion_id']; 
 
     public function count(){
         return $this->gasto()->count();
@@ -19,16 +20,19 @@ class gasto extends Model
         $gastos = gasto::all();
 
         return $gastos->count();
-    }
-    public function eliminar($id){ 
-
-        $gastos = gasto::find($id);
- 
-        $gastos->delete();
     } 
 
-    public function editar($atributoAEditar){ 
-        return $this->update(['monto' => $atributoAEditar]);
-    } 
+    public function reservacion()
+    {
+        return $this->belongsTo(reservacion::class);
+    }  
+
+    public function desasociarReserva(){ 
+
+        return $this->update(['reservacion_id' => null]);
+    }   
+
+
+
 
 }
