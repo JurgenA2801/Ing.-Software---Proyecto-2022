@@ -9,11 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class proveedor extends Model
 {
     use HasFactory; 
-    protected $fillable = ['comisiones']; 
+ 
 
-    public function agregar() { 
-        return $this->save();
-    }
     public function servicio(){ 
         return $this->hasMany(servicio::class);
      } 
@@ -33,13 +30,5 @@ class proveedor extends Model
  
         return $proveedor->count();
      }  
-     public function eliminar($id){ 
 
-        $proveedor = proveedor::find($id);
- 
-        $proveedor->delete();
-    }  
-    public function editar($atributoAEditar){ 
-        return $this->update(['comisiones' => $atributoAEditar]);
-    } 
 }

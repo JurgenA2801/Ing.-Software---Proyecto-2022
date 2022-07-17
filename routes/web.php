@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ReservacionController;
 use App\Http\Controllers\GastoController;
+use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,8 @@ Route::put('clienteUpdate', [ClienteController::class, 'update']) -> name('clien
 Route::post('gastoGuardar', [GastoController::class, 'guardar']) -> name('gastoGuardar'); 
 Route::get('gasto', [GastoController::class, 'index']) -> name('gasto'); 
 Route::put('gastoUpdate', [GastoController::class, 'update']) -> name('gastoUpdate');
+
+//rutas proveedors 
+Route::post('proveedorGuardar', [ProveedorController::class, 'guardar']) -> name('proveedorGuardar'); 
+Route::get('proveedor', [ProveedorController::class, 'index']) -> name('proveedor'); 
+Route::put('proveedorUpdate', [ProveedorController::class, 'update']) -> name('proveedorUpdate');
