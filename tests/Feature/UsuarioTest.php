@@ -21,54 +21,72 @@ class UsuarioTest extends TestCase
      *
      * @return void
      */
-    public function test_un_usuario_tiene_un_rol()
-    {
-        $usuario = usuario::factory()->create();
-        $rol = rol::factory()->create(); 
-        $rol->agregar($usuario);
-        
-        $this->assertEquals(1, $usuario->count());
+
+    public function test_se_puede_crear_un_usuario(){ 
+
+        $testUsuario = [
+            'name' => 'Jurgen',
+            'password'=> '1284y374esdnf'          
+        ];  
+
+        $response = $this->post('/usuarioGuardar', $testUsuario); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('usuarios', ['name' => 'Jurgen']);
        
-    } 
-
-    public function test_se_puede_agregar_un_usuario(){ 
-
-        $nuevoUsuario = usuario::factory()->create(); 
-        $this->assertEquals(true, $nuevoUsuario->agregar());
     }  
 
      public function test_listar_todos_los_usuarios(){ 
         
         $usuario = usuario::factory()->create();
-        $usuario2 = usuario::factory()->create();
-        $this->assertEquals(2, $usuario->cantidad_usuarios());
+        $usuario2 = usuario::factory()->create(); 
+        $usuario->save(); 
+        $usuario2->save();
+       
+        $response = $this->get('/usuario');
+        
+        $response->assertStatus(200)->assertSee($usuario->id);
+        $this->assertDatabaseHas('usuarios', ['name'=>$usuario2->name]);
 
-    } 
+    }  
+
+        public function test_editar_usuarios(){ 
+
+        $usuario = usuario::factory()->create(); 
+        $usuario->save();
+
+        $testUsuario = [
+            'id'=> 1,
+            'name' => 'Jurgen',
+            'password'=> '1284y374esdnf'          
+        ];  
+
+        $response = $this->put('/usuarioUpdate', $testUsuario); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('usuarios', ['password' => '1284y374esdnf']);
+  
+
+
+    }
 
     public function test_se_puede_eliminar_un_usuario(){ 
 
         $usuario = usuario::factory()->create(); 
-        $usuario->eliminar_usuario($usuario->id);
-        $this->assertEquals(0, $usuario->cantidad_usuarios());
+        $usuario->save();
+
+        $idAEliminar = [
+            'id'=> 1,       
+        ];  
+
+        $response = $this->delete('/usuarioDelete', $idAEliminar); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('usuarios', ['id' => 1]);
 
     } 
 
-    public function test_desasociar_un_usuario_de_su_rol(){ 
-
-        $usuario = usuario::factory()->create();
-        $rol = rol::factory()->create(); 
-        $rol->agregar($usuario); 
-        $usuario->desasociar_usuario_de_rol(); 
-        $this->assertEquals(0, $usuario->count());
-        
-    } 
-  
-    public function test_editar_usuarios(){ 
-
-        $usuario = usuario::factory()->create(); 
-        $usuario->editarUsuario($usuario); 
-        $this->assertEquals('Jurgen', $usuario->name);
-
-
-    }
 }

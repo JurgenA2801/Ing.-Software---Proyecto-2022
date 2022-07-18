@@ -10,11 +10,8 @@ class usuario extends Model
 {
     use HasFactory; 
 
-    protected $fillable = ['rol_id', 'name'];
+    protected $fillable = ['rol_id'];
 
-    public function agregar() { 
-        return $this->save();
-    }
 
     public function rol()
     {
@@ -26,12 +23,6 @@ class usuario extends Model
         return $this->rol()->count();
     } 
 
-    public function listar(){ 
-
-        usuario::all();
-
-    } 
-
     public function cantidad_usuarios(){ 
 
        $usuarios = usuario::all();
@@ -39,22 +30,9 @@ class usuario extends Model
        return $usuarios->count();
     } 
 
-    public function eliminar_usuario($id){ 
-
-        $user = usuario::find($id);
- 
-        $user->delete();
-    } 
-
     public function desasociar_usuario_de_rol()
     {
         return $this->update(['rol_id' => null]);
     
     } 
-
-    public function editarUsuario(){ 
-
-     return $this->update(['name' => 'Jurgen']);
-
-    }
 }

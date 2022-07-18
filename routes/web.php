@@ -5,6 +5,7 @@ use App\Http\Controllers\ReservacionController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,3 +46,9 @@ Route::put('proveedorUpdate', [ProveedorController::class, 'update']) -> name('p
 Route::post('servicioGuardar', [ServicioController::class, 'guardar']) -> name('servicioGuardar'); 
 Route::get('servicio', [ServicioController::class, 'index']) -> name('servicio'); 
 Route::put('servicioUpdate', [ServicioController::class, 'update']) -> name('servicioUpdate');
+
+//rutas usuario  
+Route::post('usuarioGuardar', [UsuarioController::class, 'guardar']) -> name('usuarioGuardar'); 
+Route::get('usuario', [UsuarioController::class, 'index']) -> name('usuario'); 
+Route::put('usuarioUpdate', [UsuarioController::class, 'update']) -> name('usuarioUpdate');
+Route::delete('usuarioDelete', [UsuarioController::class, 'delete']) -> name('usuarioDelete');

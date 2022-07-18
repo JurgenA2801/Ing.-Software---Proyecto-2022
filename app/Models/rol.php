@@ -14,7 +14,7 @@ class rol extends Model
         return $this->hasOne(usuario::class);
     } 
 
-    public function agregar($usuario) { 
+    public function agregarUsuario($usuario) { 
         return $this->usuario()->save($usuario);
     }
 
