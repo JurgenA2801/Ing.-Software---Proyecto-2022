@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
             // $table->foreignId('tarifa_id')->nullable()->index(); 
-             $table->foreignId('proveedor_id')->nullable()->index(); 
+            $table->foreignId('proveedor_id')->nullable()->index(); 
             $table->string('fecha'); 
             $table->string('observaciones');
             $table->timestamps();

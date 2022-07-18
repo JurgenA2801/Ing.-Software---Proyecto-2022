@@ -17,48 +17,52 @@ class ServicioTest extends TestCase
      * @return void
      */
   
-
-    public function test_una_servicio_puede_tener_un_proveedores()
-    {
-        $servic= servicio::factory()->create();
-        $proveed = proveedor::factory()->create(); 
-        $proveed->agregarservicio($servic);
-        
-        $this->assertEquals(1, $servic->countproveedor());
-    }
-
-    public function test_se_puede_desasociar_un_servicio_de_una_proveedor(){ 
-        $servicio = servicio::factory()->create();
-        $proveedor = proveedor::factory()->create(); 
-        $proveedor->agregarservicio($servicio);
-        $servicio->desasociarproveedor();
-        $this->assertEquals(0, $servicio->countproveedor()); 
-
-        
-    }
-    public function test_eliminar_servicio(){ 
-        $servicio = servicio::factory()->create(); 
-        $servicio2 = servicio::factory()->create(); 
-        $servicio->eliminar($servicio->id);
-        $this->assertEquals(1, $servicio->cantidadservicio());
-    } 
-    public function test_mostrar_todas_las_servicios(){ 
+    public function test_mostrar_todos_los_servicios(){ 
 
         $servicio = servicio::factory()->create(); 
         $servicio2 = servicio::factory()->create(); 
-        $servicio3 = servicio::factory()->create(); 
-        $this->assertEquals(3, $servicio->cantidadservicio());
+        $servicio->save(); 
+        $servicio2->save();
+
+        $response = $this->get('/servicio');
+        
+        $response->assertStatus(200)->assertSee($servicio->id);
+        $this->assertDatabaseHas('servicios', ['observaciones'=>$servicio2->observaciones]);
     
     }
-    public function test_agregar_servicio(){ 
-        $servicio = servicio::factory()->create(); 
-        $this->assertEquals(true, $servicio->agregar()); 
+    public function test_crear_servicio(){ 
+       
+        $testServicio= [
+            'fecha' => date("Y/m/d"), 
+            'observaciones' => 'Servicio con un 1 mes de vigencia'   
+        ]; 
+
+        $response = $this->post('/servicioGuardar', $testServicio); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('servicios', ['observaciones' => 'Servicio con un 1 mes de vigencia']);
+
     } 
 
     public function test_editar_servicio(){  
         $servicio = servicio::factory()->create(); 
-        $servicio->editar('10'); 
-        $this->assertEquals('10', $servicio->fecha); 
+        $servicio->save();  
+
+        $testServicio= [
+            'id'=>1,
+            'fecha' => date("Y/m/d"), 
+            'observaciones' => 'Servicio con un 1 mes de vigencia'   
+        ];  
+
+        $response = $this->put('/servicioUpdate', $testServicio); 
+ 
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('servicios', ['observaciones'=>'Servicio con un 1 mes de vigencia']);
+
+
+       
 
     } 
 }

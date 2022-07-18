@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class servicio extends Model
 {
     use HasFactory; 
-    protected $fillable = ['proveedor_id', 'fecha']; 
-    public function agregar() {
-        return $this->save();
-    } 
+    protected $fillable = ['proveedor_id']; 
+
     public function reservacions() { 
         return $this->belongsToMany(reservacion::class);
     } 
@@ -24,9 +22,9 @@ class servicio extends Model
     {
         return $this->reserva_servicio()->save($reserva);
     }
-    public function agregarproveedores($reserva)
+    public function agregarproveedores($servicio)
     {
-        return $this->proveedor()->save($reserva);
+        return $this->proveedor()->save($servicio);
     }
 
     public function cantidadservicio(){ 
@@ -48,14 +46,6 @@ class servicio extends Model
 
         return $this->update(['proveedor_id' => null]);
     } 
-    public function eliminar($id){ 
-
-        $servicio = servicio::find($id);
  
-        $servicio->delete();
-    }  
-    
-    public function editar($atributoAEditar){ 
-        return $this->update(['fecha' => $atributoAEditar]);
-    } 
+
 }
